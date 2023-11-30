@@ -55,7 +55,7 @@ class TicTacToeEndScreen extends StatelessWidget {
         ),
         rectangularMenuArea: MyButton(
           onPressed: () {
-            GoRouter.of(context).go('/play');
+            GoRouter.of(context).go('/play/tic_tac_toe');
           },
           child: const Text('Continue'),
         ),

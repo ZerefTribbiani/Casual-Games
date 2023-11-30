@@ -82,7 +82,7 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MyButton(
-                      onPressed: () => GoRouter.of(context).go('/play'),
+                      onPressed: () => GoRouter.of(context).go('/play/tic_tac_toe'),
                       child: const Text('Back'),
                     ),
                   ),

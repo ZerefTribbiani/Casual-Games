@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/game_selection/game_selection_screen.dart';
+import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_level_selection_screen.dart';
 import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
 import 'package:basic/play_session/tic_tac_toe/tic_tac_toe_screen.dart';
 import 'package:basic/play_session/tic_tac_toe/tile.dart';
@@ -99,14 +100,30 @@ final router = GoRouter(
               pageBuilder: (context, state) {
                 return buildMyTransition<void>(
                   key: ValueKey('tic tac toe'),
-                  color: context.watch<Palette>().backgroundPlaySession,
-                  child: TicTacToeScreen(
-                    key: ValueKey('tic tac toe play session'),
-                    level: ticTacToeLevels[0],
+                  color: context.watch<Palette>().backgroundLevelSelection,
+                  child: TicTacToeLevelSelectionScreen(
+                    key: ValueKey('tic tac toe level selection'),
                   ),
                 );
               },
               routes: [
+                GoRoute(
+                  path: 'session/:level',
+                  pageBuilder: (context, state) {
+                    final levelNumber =
+                        int.parse(state.pathParameters['level']!);
+                    final level = ticTacToeLevels
+                        .singleWhere((e) => e.number == levelNumber);
+                    return buildMyTransition<void>(
+                      key: ValueKey('tic tac toe level'),
+                      color: context.watch<Palette>().backgroundPlaySession,
+                      child: TicTacToeScreen(
+                        level: level,
+                        key: ValueKey('tic tac toe play session'),
+                      ),
+                    );
+                  },
+                ),
                 GoRoute(
                   path: 'finish',
                   redirect: (context, state) {

@@ -11,6 +11,12 @@ const ticTacToeLevels = [
     cols: 4,
     n: 3,
   ),
+  TicTacToeLevel(
+    number: 3,
+    rows: 5,
+    cols: 5,
+    n: 4,
+  ),
 ];
 
 class TicTacToeLevel {
