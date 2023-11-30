@@ -3,10 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/game_selection/game_selection_screen.dart';
+import 'package:basic/level_selection/tic_tac_toe/make_custom_level_screen.dart';
 import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_level_selection_screen.dart';
 import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
+import 'package:basic/play_session/tic_tac_toe/player.dart';
 import 'package:basic/play_session/tic_tac_toe/tic_tac_toe_screen.dart';
-import 'package:basic/play_session/tic_tac_toe/tile.dart';
 import 'package:basic/win_game/tic_tac_toe_end_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
@@ -108,6 +109,21 @@ final router = GoRouter(
               },
               routes: [
                 GoRoute(
+                  path: 'session/custom',
+                  pageBuilder: (context, state) {
+                    final map = state.extra! as Map<String, TicTacToeLevel>;
+                    final level = map['level']!;
+                    return buildMyTransition<void>(
+                      key: ValueKey('tic tac toe custom level creation'),
+                      color: context.watch<Palette>().backgroundPlaySession,
+                      child: TicTacToeScreen(
+                        level: level,
+                        key: ValueKey('tic tac toe custom play session'),
+                      ),
+                    );
+                  },
+                ),
+                GoRoute(
                   path: 'session/:level',
                   pageBuilder: (context, state) {
                     final levelNumber =
@@ -120,6 +136,18 @@ final router = GoRouter(
                       child: TicTacToeScreen(
                         level: level,
                         key: ValueKey('tic tac toe play session'),
+                      ),
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: 'make_custom_session',
+                  pageBuilder: (context, state) {
+                    return buildMyTransition<void>(
+                      key: ValueKey('tic tac toe custom level'),
+                      color: context.watch<Palette>().backgroundLevelSelection,
+                      child: MakeCustomLevelScreen(
+                        key: ValueKey('tic tac toe custom level creation'),
                       ),
                     );
                   },

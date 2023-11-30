@@ -1,24 +1,10 @@
 import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
+import 'package:basic/play_session/tic_tac_toe/player.dart';
 import 'package:basic/style/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-enum Player { x, o, none }
-
-extension PlayerToString on Player {
-  String string() {
-    switch (this) {
-      case Player.x:
-        return 'X';
-      case Player.o:
-        return 'O';
-      case Player.none:
-        return '';
-    }
-  }
-}
-
-enum TileSide {
+enum TilePlacement {
   center,
   topLeft,
   topRight,
@@ -33,13 +19,13 @@ enum TileSide {
 class Tile extends StatelessWidget {
   final int x;
   final int y;
-  final TileSide tileSide;
+  final TilePlacement tilePos;
 
   const Tile({
     super.key,
     required this.x,
     required this.y,
-    this.tileSide = TileSide.center,
+    this.tilePos = TilePlacement.center,
   });
 
   @override
@@ -49,25 +35,25 @@ class Tile extends StatelessWidget {
 
     Border border;
     BorderSide borderSide = BorderSide(color: palette.inkFullOpacity, width: 3);
-    switch (tileSide) {
-      case TileSide.center:
+    switch (tilePos) {
+      case TilePlacement.center:
         border = Border.all(color: palette.inkFullOpacity, width: 3);
-      case TileSide.topLeft:
+      case TilePlacement.topLeft:
         border = Border(bottom: borderSide, right: borderSide);
-      case TileSide.topRight:
+      case TilePlacement.topRight:
         border = Border(bottom: borderSide, left: borderSide);
-      case TileSide.bottomLeft:
+      case TilePlacement.bottomLeft:
         border = Border(top: borderSide, right: borderSide);
-      case TileSide.bottomRight:
+      case TilePlacement.bottomRight:
         border = Border(top: borderSide, left: borderSide);
-      case TileSide.topEdge:
+      case TilePlacement.topEdge:
         border =
             Border(bottom: borderSide, left: borderSide, right: borderSide);
-      case TileSide.bottomEdge:
+      case TilePlacement.bottomEdge:
         border = Border(top: borderSide, left: borderSide, right: borderSide);
-      case TileSide.leftEdge:
+      case TilePlacement.leftEdge:
         border = Border(top: borderSide, bottom: borderSide, right: borderSide);
-      case TileSide.rightEdge:
+      case TilePlacement.rightEdge:
         border = Border(top: borderSide, bottom: borderSide, left: borderSide);
     }
 

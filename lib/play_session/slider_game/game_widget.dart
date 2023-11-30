@@ -19,10 +19,16 @@ class GameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final level = context.watch<GameLevel>();
     final levelState = context.watch<LevelState>();
+    final Text goalText;
+    if (level.difficulty == 'Easy') {
+      goalText = Text('Drag the slider to ${level.goal}% or above!');
+    } else {
+      goalText = Text('Drag the slider to exactly ${level.goal}%!');
+    }
 
     return Column(
       children: [
-        Text('Drag the slider to ${level.goal}% or above!'),
+        goalText,
         Slider(
           label: 'Level Progress',
           autofocus: true,

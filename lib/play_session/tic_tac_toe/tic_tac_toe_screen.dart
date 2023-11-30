@@ -3,7 +3,7 @@ import 'package:basic/audio/sounds.dart';
 import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
 import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
 import 'package:basic/play_session/tic_tac_toe/board.dart';
-import 'package:basic/play_session/tic_tac_toe/tile.dart';
+import 'package:basic/play_session/tic_tac_toe/player.dart';
 import 'package:basic/style/confetti.dart';
 import 'package:basic/style/my_button.dart';
 import 'package:basic/style/palette.dart';

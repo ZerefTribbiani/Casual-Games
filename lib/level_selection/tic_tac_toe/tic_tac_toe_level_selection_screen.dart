@@ -46,8 +46,19 @@ class TicTacToeLevelSelectionScreen extends StatelessWidget {
                       },
                       leading: Text(level.number.toString()),
                       title: Text('Grid: ${level.rows} x ${level.cols}\n'
-                          'Goal: ${level.n}'),
-                    )
+                          'Goal: ${level.goal}'),
+                    ),
+                  ListTile(
+                    onTap: () {
+                      final audioController = context.read<AudioController>();
+                      audioController.playSfx(SfxType.buttonTap);
+
+                      GoRouter.of(context)
+                          .go('/play/tic_tac_toe/make_custom_session');
+                    },
+                    leading: Text((ticTacToeLevels.length + 1).toString()),
+                    title: Text('Custom Level'),
+                  ),
                 ],
               ),
             ),

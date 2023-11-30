@@ -1,6 +1,6 @@
 import 'dart:math' show max, min;
 
-import 'package:basic/play_session/tic_tac_toe/tile.dart';
+import 'package:basic/play_session/tic_tac_toe/player.dart';
 import 'package:flutter/material.dart';
 
 class BoardState extends ChangeNotifier {

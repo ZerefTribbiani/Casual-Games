@@ -1,4 +1,4 @@
-import 'package:basic/play_session/tic_tac_toe/tile.dart';
+import 'package:basic/play_session/tic_tac_toe/player.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

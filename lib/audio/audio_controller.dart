@@ -2,9 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-// TODO: main menu sound off and settings sound off symbols are not synced
-// TODO: unable to remove button sfx
-
 import 'dart:async';
 import 'dart:collection';
 import 'dart:math';

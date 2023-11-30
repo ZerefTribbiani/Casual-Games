@@ -1,3 +1,5 @@
+import 'package:basic/audio/audio_controller.dart';
+import 'package:basic/audio/sounds.dart';
 import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
 import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
 import 'package:basic/play_session/tic_tac_toe/tile.dart';
@@ -51,32 +53,32 @@ class _BoardState extends State<Board> {
             itemBuilder: (context, index) {
               int x = index ~/ level.cols;
               int y = index % level.cols;
-              TileSide tileSide;
+              TilePlacement tileSide;
               if (x == 0 && y == 0) {
-                tileSide = TileSide.topLeft;
+                tileSide = TilePlacement.topLeft;
               } else if (x == 0 && y == level.cols - 1) {
-                tileSide = TileSide.topRight;
+                tileSide = TilePlacement.topRight;
               } else if (x == level.rows - 1 && y == 0) {
-                tileSide = TileSide.bottomLeft;
+                tileSide = TilePlacement.bottomLeft;
               } else if (x == level.rows - 1 && y == level.cols - 1) {
-                tileSide = TileSide.bottomRight;
+                tileSide = TilePlacement.bottomRight;
               } else if (x == 0) {
-                tileSide = TileSide.topEdge;
+                tileSide = TilePlacement.topEdge;
               } else if (x == level.rows - 1) {
-                tileSide = TileSide.bottomEdge;
+                tileSide = TilePlacement.bottomEdge;
               } else if (y == 0) {
-                tileSide = TileSide.leftEdge;
+                tileSide = TilePlacement.leftEdge;
               } else if (y == level.cols - 1) {
-                tileSide = TileSide.rightEdge;
+                tileSide = TilePlacement.rightEdge;
               } else {
-                tileSide = TileSide.center;
+                tileSide = TilePlacement.center;
               }
 
               return GestureDetector(
                 onTap: (() {
                   _onTap(context, index);
                 }),
-                child: Tile(x: x, y: y, tileSide: tileSide),
+                child: Tile(x: x, y: y, tilePos: tileSide),
               );
             },
           ),
@@ -86,8 +88,10 @@ class _BoardState extends State<Board> {
   }
 
   void _onTap(BuildContext context, int index) {
+    final audioController = context.read<AudioController>();
+    audioController.playSfx(SfxType.buttonTap);
     final level = Provider.of<TicTacToeLevel>(context, listen: false);
     final boardState = Provider.of<BoardState>(context, listen: false);
-    boardState.makeMove(index, level.n);
+    boardState.makeMove(index, level.goal);
   }
 }
