@@ -7,11 +7,6 @@ const gameLevels = [
     number: 1,
     goal: 5,
     difficulty: 'Easy',
-    // TODO: When ready, change these achievement IDs.
-    // You configure this in App Store Connect.
-    achievementIdIOS: 'first_win',
-    // You get this string when you configure an achievement in Play Console.
-    achievementIdAndroid: 'NhkIwB69ejkMAOOLDb',
   ),
   GameLevel(
     number: 2,
@@ -22,8 +17,6 @@ const gameLevels = [
     number: 3,
     goal: 100,
     difficulty: 'Easy',
-    achievementIdIOS: 'finished',
-    achievementIdAndroid: 'CdfIhE96aspNWLGSQg',
   ),
   GameLevel(
     number: 4,
