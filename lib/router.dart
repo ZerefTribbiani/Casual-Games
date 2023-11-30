@@ -3,20 +3,23 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:basic/game_selection/game_selection_screen.dart';
+import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
 import 'package:basic/play_session/tic_tac_toe/tic_tac_toe_screen.dart';
+import 'package:basic/play_session/tic_tac_toe/tile.dart';
+import 'package:basic/win_game/tic_tac_toe_end_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'game_internals/slider_game/score.dart';
-import 'level_selection/level_selection_screen.dart';
-import 'level_selection/levels.dart';
+import 'level_selection/slider_game/level_selection_screen.dart';
+import 'level_selection/slider_game/levels.dart';
 import 'main_menu/main_menu_screen.dart';
 import 'play_session/slider_game/slider_screen.dart';
 import 'settings/settings_screen.dart';
 import 'style/my_transition.dart';
 import 'style/palette.dart';
-import 'win_game/win_game_screen.dart';
+import 'win_game/slider_win_screen.dart';
 
 /// The router describes the game's navigational hierarchy, from the main
 /// screen through settings screens all the way to each individual level.
@@ -99,9 +102,40 @@ final router = GoRouter(
                   color: context.watch<Palette>().backgroundPlaySession,
                   child: TicTacToeScreen(
                     key: ValueKey('tic tac toe play session'),
+                    level: ticTacToeLevels[0],
                   ),
                 );
               },
+              routes: [
+                GoRoute(
+                  path: 'finish',
+                  redirect: (context, state) {
+                    if (state.extra == null) {
+                      // Trying to navigate to a win screen without any data.
+                      // Possibly by using the browser's back button.
+                      return '/';
+                    }
+
+                    // Otherwise, do not redirect.
+                    return null;
+                  },
+                  pageBuilder: (context, state) {
+                    final map = state.extra! as Map<String, dynamic>;
+                    final winner = map['winner'] as Player;
+                    final duration = map['duration'] as Duration;
+
+                    return buildMyTransition<void>(
+                      key: ValueKey('finish'),
+                      color: context.watch<Palette>().backgroundPlaySession,
+                      child: TicTacToeEndScreen(
+                        winner: winner,
+                        duration: duration,
+                        key: const Key('win game'),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

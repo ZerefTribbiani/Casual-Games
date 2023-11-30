@@ -4,12 +4,19 @@ import 'package:basic/play_session/tic_tac_toe/tile.dart';
 import 'package:flutter/material.dart';
 
 class BoardState extends ChangeNotifier {
+  final void Function(Player) onGameFinish;
+
   int currentPlayer = 1;
   int filledBoxes = 0;
+  Player winner = Player.none;
 
   late List<List<Player>> tileOwners;
 
-  BoardState({int rows = 3, int cols = 3}) {
+  BoardState({
+    required this.onGameFinish,
+    int rows = 3,
+    int cols = 3,
+  }) {
     tileOwners = List.generate(rows, (index) => List.filled(cols, Player.none));
   }
 
@@ -19,14 +26,19 @@ class BoardState extends ChangeNotifier {
 
     if (tileOwners[x][y] == Player.none) {
       tileOwners[x][y] = currentPlayer == 1 ? Player.x : Player.o;
-      currentPlayer = 3 - currentPlayer;
       filledBoxes++;
+      if (_checkForWin(x, y, n)) {
+        onGameFinish(tileOwners[x][y]);
+      } else if (_checkForDraw()) {
+        onGameFinish(Player.none);
+      } else {
+        currentPlayer = 3 - currentPlayer;
+      }
       notifyListeners();
-      _checkForWin(x, y, n);
     }
   }
 
-  _checkForWin(int x, int y, int n) {
+  bool _checkForWin(int x, int y, int n) {
     int rows = tileOwners.length;
     int cols = tileOwners[0].length;
     Player currentSide = tileOwners[x][y];
@@ -39,8 +51,7 @@ class BoardState extends ChangeNotifier {
       if (tileOwners[x][i] == currentSide) {
         count++;
         if (count == n) {
-          _onWin();
-          return;
+          return true;
         }
       } else {
         count = 0;
@@ -55,8 +66,7 @@ class BoardState extends ChangeNotifier {
       if (tileOwners[i][y] == currentSide) {
         count++;
         if (count == n) {
-          _onWin();
-          return;
+          return true;
         }
       } else {
         count = 0;
@@ -75,8 +85,7 @@ class BoardState extends ChangeNotifier {
       if (tileOwners[diagX][diagY] == currentSide) {
         count++;
         if (count == n) {
-          _onWin();
-          return;
+          return true;
         }
       } else {
         count = 0;
@@ -97,8 +106,7 @@ class BoardState extends ChangeNotifier {
       if (tileOwners[diagX][diagY] == currentSide) {
         count++;
         if (count == n) {
-          _onWin();
-          return;
+          return true;
         }
       } else {
         count = 0;
@@ -106,18 +114,12 @@ class BoardState extends ChangeNotifier {
       diagX--;
       diagY++;
     }
-
-    // Checking for draw
-    if (filledBoxes == rows * cols) {
-      _onDraw();
-    }
+    return false;
   }
 
-  void _onWin() {
-    print('Won');
-  }
-
-  void _onDraw() {
-    print('Draw');
+  bool _checkForDraw() {
+    int rows = tileOwners.length;
+    int cols = tileOwners[0].length;
+    return filledBoxes == rows * cols;
   }
 }

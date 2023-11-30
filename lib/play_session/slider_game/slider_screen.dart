@@ -13,7 +13,7 @@ import '../../audio/audio_controller.dart';
 import '../../audio/sounds.dart';
 import '../../game_internals/slider_game/level_state.dart';
 import '../../game_internals/slider_game/score.dart';
-import '../../level_selection/levels.dart';
+import '../../level_selection/slider_game/levels.dart';
 import '../../player_progress/player_progress.dart';
 import '../../style/confetti.dart';
 import '../../style/my_button.dart';
@@ -141,13 +141,13 @@ class _SliderScreenState extends State<SliderScreen> {
     final playerProgress = context.read<PlayerProgress>();
     playerProgress.setLevelReached(widget.level.number);
 
-    // Let the player see the game just after winning for a bit.
-    await Future<void>.delayed(_preCelebrationDuration);
-    if (!mounted) return;
-
     setState(() {
       _duringCelebration = true;
     });
+
+    // Let the player see the game just after winning for a bit.
+    await Future<void>.delayed(_preCelebrationDuration);
+    if (!mounted) return;
 
     final audioController = context.read<AudioController>();
     audioController.playSfx(SfxType.congrats);

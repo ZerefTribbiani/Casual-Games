@@ -1,5 +1,9 @@
+import 'package:basic/audio/audio_controller.dart';
+import 'package:basic/audio/sounds.dart';
 import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
+import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
 import 'package:basic/play_session/tic_tac_toe/board.dart';
+import 'package:basic/play_session/tic_tac_toe/tile.dart';
 import 'package:basic/style/confetti.dart';
 import 'package:basic/style/my_button.dart';
 import 'package:basic/style/palette.dart';
@@ -9,16 +13,9 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 class TicTacToeScreen extends StatefulWidget {
-  final int rows;
-  final int cols;
-  final int n;
+  final TicTacToeLevel level;
 
-  const TicTacToeScreen({
-    super.key,
-    this.rows = 3,
-    this.cols = 3,
-    this.n = 3,
-  });
+  const TicTacToeScreen({super.key, required this.level});
 
   @override
   State<TicTacToeScreen> createState() => _TicTacToeScreenState();
@@ -46,11 +43,17 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
 
-    return ChangeNotifierProvider(
-      create: (context) => BoardState(
-        rows: widget.rows,
-        cols: widget.cols,
-      ),
+    return MultiProvider(
+      providers: [
+        Provider.value(value: widget.level),
+        ChangeNotifierProvider(
+          create: (context) => BoardState(
+            onGameFinish: _onGameFinish,
+            rows: widget.level.rows,
+            cols: widget.level.cols,
+          ),
+        ),
+      ],
       child: IgnorePointer(
         ignoring: _duringCelebration,
         child: Scaffold(
@@ -73,7 +76,7 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
                   Spacer(),
                   Expanded(
                     flex: 7,
-                    child: Board(rows: 3, cols: 3, n: 3),
+                    child: Board(),
                   ),
                   Spacer(),
                   Padding(
@@ -99,6 +102,30 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _onGameFinish(Player winner) async {
+    _log.info('Level ${widget.level.number} won');
+
+    setState(() {
+      _duringCelebration = true;
+    });
+
+    await Future<void>.delayed(_preCelebrationDuration);
+    if (!mounted) return;
+
+    final duration = DateTime.now().difference(_startOfPlay);
+
+    final audioController = context.read<AudioController>();
+    audioController.playSfx(SfxType.congrats);
+
+    await Future<void>.delayed(_celebrationDuration);
+    if (!mounted) return;
+
+    GoRouter.of(context).go(
+      '/play/tic_tac_toe/finish',
+      extra: {'winner': winner, 'duration': duration},
     );
   }
 }

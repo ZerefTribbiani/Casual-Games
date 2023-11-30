@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../audio/audio_controller.dart';
 import '../../audio/sounds.dart';
 import '../../game_internals/slider_game/level_state.dart';
-import '../../level_selection/levels.dart';
+import '../../level_selection/slider_game/levels.dart';
 
 /// This widget defines the game UI itself, without things like the settings
 /// button or the back button.

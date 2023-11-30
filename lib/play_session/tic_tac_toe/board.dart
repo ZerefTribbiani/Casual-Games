@@ -1,4 +1,5 @@
 import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
+import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
 import 'package:basic/play_session/tic_tac_toe/tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,8 @@ class CurrentPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentPlayer = context.watch<BoardState>().currentPlayer;
-    final playerSide = currentPlayer == 1 ? 'X' : 'O';
+    final boardState = context.watch<BoardState>();
+    final playerSide = boardState.currentPlayer == 1 ? 'X' : 'O';
 
     return Text(
       'Current Player: $playerSide',
@@ -24,16 +25,7 @@ class CurrentPlayerWidget extends StatelessWidget {
 }
 
 class Board extends StatefulWidget {
-  final int rows;
-  final int cols;
-  final int n;
-
-  const Board({
-    super.key,
-    required this.rows,
-    required this.cols,
-    required this.n,
-  });
+  const Board({super.key});
 
   @override
   State<Board> createState() => _BoardState();
@@ -42,6 +34,8 @@ class Board extends StatefulWidget {
 class _BoardState extends State<Board> {
   @override
   Widget build(BuildContext context) {
+    final level = context.watch<TicTacToeLevel>();
+
     return Column(
       children: [
         Expanded(
@@ -51,28 +45,28 @@ class _BoardState extends State<Board> {
         Expanded(
           flex: 4,
           child: GridView.builder(
-            itemCount: widget.rows * widget.cols,
+            itemCount: level.rows * level.cols,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: widget.cols),
+                crossAxisCount: level.cols),
             itemBuilder: (context, index) {
-              int x = index ~/ widget.cols;
-              int y = index % widget.cols;
+              int x = index ~/ level.cols;
+              int y = index % level.cols;
               TileSide tileSide;
               if (x == 0 && y == 0) {
                 tileSide = TileSide.topLeft;
-              } else if (x == 0 && y == widget.cols - 1) {
+              } else if (x == 0 && y == level.cols - 1) {
                 tileSide = TileSide.topRight;
-              } else if (x == widget.rows - 1 && y == 0) {
+              } else if (x == level.rows - 1 && y == 0) {
                 tileSide = TileSide.bottomLeft;
-              } else if (x == widget.rows - 1 && y == widget.cols - 1) {
+              } else if (x == level.rows - 1 && y == level.cols - 1) {
                 tileSide = TileSide.bottomRight;
               } else if (x == 0) {
                 tileSide = TileSide.topEdge;
-              } else if (x == widget.rows - 1) {
+              } else if (x == level.rows - 1) {
                 tileSide = TileSide.bottomEdge;
               } else if (y == 0) {
                 tileSide = TileSide.leftEdge;
-              } else if (y == widget.cols - 1) {
+              } else if (y == level.cols - 1) {
                 tileSide = TileSide.rightEdge;
               } else {
                 tileSide = TileSide.center;
@@ -92,7 +86,8 @@ class _BoardState extends State<Board> {
   }
 
   void _onTap(BuildContext context, int index) {
+    final level = Provider.of<TicTacToeLevel>(context, listen: false);
     final boardState = Provider.of<BoardState>(context, listen: false);
-    boardState.makeMove(index, widget.n);
+    boardState.makeMove(index, level.n);
   }
 }
