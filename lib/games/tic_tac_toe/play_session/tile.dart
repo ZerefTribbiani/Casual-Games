@@ -37,6 +37,8 @@ class Tile extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final cols = boardState.tileOwners[0].length;
     final fontSize = screenWidth / cols / 1.5;
+    final Color color =
+        boardState.winningTiles[x][y] ? Colors.red : palette.ink;
 
     Border border;
     BorderSide borderSide = BorderSide(color: palette.inkFullOpacity, width: 3);
@@ -71,6 +73,7 @@ class Tile extends StatelessWidget {
           tileOwner.string(),
           textAlign: TextAlign.center,
           style: TextStyle(
+            color: color,
             fontFamily: 'Permanent Marker',
             fontSize: fontSize,
             height: 1,
