@@ -142,7 +142,7 @@ class BoardState extends ChangeNotifier {
         }
       case 'Column':
         for (int i = 0; i < goal; i++) {
-          winningTiles[x - 1][y] = true;
+          winningTiles[x - i][y] = true;
         }
       case 'TopLeftBottomRightDiagonal':
         for (int i = 0; i < goal; i++) {
