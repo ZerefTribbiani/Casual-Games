@@ -58,6 +58,7 @@ class SettingsScreen extends StatelessWidget {
                 onSelected: () => settings.toggleMusicOn(),
               ),
             ),
+            const _GameTitle('Slider Game'),
             _SettingsLine(
               'Reset progress',
               const Icon(Icons.delete),
@@ -157,6 +158,26 @@ class _SettingsLine extends StatelessWidget {
             ),
             icon,
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _GameTitle extends StatelessWidget {
+  final String title;
+
+  const _GameTitle(this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 20.0, left: 8.0),
+      child: Text(
+        '$title:',
+        style: const TextStyle(
+          fontFamily: 'Permanent Marker',
+          fontSize: 30,
         ),
       ),
     );

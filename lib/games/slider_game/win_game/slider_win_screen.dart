@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../game_internals/slider_game/score.dart';
-import '../style/my_button.dart';
-import '../style/palette.dart';
-import '../style/responsive_screen.dart';
+import '../game_internals/score.dart';
+import '../../../style/my_button.dart';
+import '../../../style/palette.dart';
+import '../../../style/responsive_screen.dart';
 
-class WinGameScreen extends StatelessWidget {
-  final Score score;
+class SliderWinScreen extends StatelessWidget {
+  final SliderScore score;
 
-  const WinGameScreen({
+  const SliderWinScreen({
     super.key,
     required this.score,
   });

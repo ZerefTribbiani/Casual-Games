@@ -8,12 +8,12 @@ import 'package:flutter/foundation.dart';
 ///
 /// Tracks only a single variable, [progress], and calls [onWin] when
 /// the value of [progress] reaches [goal].
-class LevelState extends ChangeNotifier {
+class SliderLevelState extends ChangeNotifier {
   final VoidCallback onWin;
 
   final int goal;
 
-  LevelState({required this.onWin, this.goal = 100});
+  SliderLevelState({required this.onWin, this.goal = 100});
 
   int _progress = 0;
 

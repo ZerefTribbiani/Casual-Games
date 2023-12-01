@@ -5,20 +5,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../audio/audio_controller.dart';
-import '../../audio/sounds.dart';
-import '../../game_internals/slider_game/level_state.dart';
-import '../../level_selection/slider_game/levels.dart';
+import '../../../audio/audio_controller.dart';
+import '../../../audio/sounds.dart';
+import '../game_internals/level_state.dart';
+import '../level_selection/levels.dart';
 
 /// This widget defines the game UI itself, without things like the settings
 /// button or the back button.
-class GameWidget extends StatelessWidget {
-  const GameWidget({super.key});
+class SliderWidget extends StatelessWidget {
+  const SliderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final level = context.watch<GameLevel>();
-    final levelState = context.watch<LevelState>();
+    final level = context.watch<SliderLevel>();
+    final levelState = context.watch<SliderLevelState>();
     final Text goalText;
     if (level.difficulty == 'Easy') {
       goalText = Text('Drag the slider to ${level.goal}% or above!');

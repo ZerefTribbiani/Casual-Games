@@ -1,11 +1,11 @@
-import 'package:basic/play_session/tic_tac_toe/player.dart';
+import 'package:basic/games/tic_tac_toe/play_session/player.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../style/my_button.dart';
-import '../style/palette.dart';
-import '../style/responsive_screen.dart';
+import '../../../style/my_button.dart';
+import '../../../style/palette.dart';
+import '../../../style/responsive_screen.dart';
 
 class TicTacToeEndScreen extends StatelessWidget {
   final Player winner;

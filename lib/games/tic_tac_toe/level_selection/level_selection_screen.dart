@@ -1,13 +1,13 @@
-import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
+import 'package:basic/games/tic_tac_toe/level_selection/levels.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../audio/audio_controller.dart';
-import '../../audio/sounds.dart';
-import '../../style/my_button.dart';
-import '../../style/palette.dart';
-import '../../style/responsive_screen.dart';
+import '../../../audio/audio_controller.dart';
+import '../../../audio/sounds.dart';
+import '../../../style/my_button.dart';
+import '../../../style/palette.dart';
+import '../../../style/responsive_screen.dart';
 
 class TicTacToeLevelSelectionScreen extends StatelessWidget {
   const TicTacToeLevelSelectionScreen({super.key});

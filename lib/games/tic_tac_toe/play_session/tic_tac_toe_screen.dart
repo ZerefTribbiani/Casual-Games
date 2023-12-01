@@ -1,9 +1,9 @@
 import 'package:basic/audio/audio_controller.dart';
 import 'package:basic/audio/sounds.dart';
-import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
-import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
-import 'package:basic/play_session/tic_tac_toe/board.dart';
-import 'package:basic/play_session/tic_tac_toe/player.dart';
+import 'package:basic/games/tic_tac_toe/game_internals/board_state.dart';
+import 'package:basic/games/tic_tac_toe/level_selection/levels.dart';
+import 'package:basic/games/tic_tac_toe/play_session/tic_tac_toe_widget.dart';
+import 'package:basic/games/tic_tac_toe/play_session/player.dart';
 import 'package:basic/style/confetti.dart';
 import 'package:basic/style/my_button.dart';
 import 'package:basic/style/palette.dart';
@@ -76,13 +76,14 @@ class _TicTacToeScreenState extends State<TicTacToeScreen> {
                   Spacer(),
                   Expanded(
                     flex: 7,
-                    child: Board(),
+                    child: TicTacToeWidget(),
                   ),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MyButton(
-                      onPressed: () => GoRouter.of(context).go('/play/tic_tac_toe'),
+                      onPressed: () =>
+                          GoRouter.of(context).go('/play/tic_tac_toe'),
                       child: const Text('Back'),
                     ),
                   ),

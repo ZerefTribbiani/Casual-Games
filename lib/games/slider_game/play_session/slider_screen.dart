@@ -9,16 +9,16 @@ import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
 import 'package:provider/provider.dart';
 
-import '../../audio/audio_controller.dart';
-import '../../audio/sounds.dart';
-import '../../game_internals/slider_game/level_state.dart';
-import '../../game_internals/slider_game/score.dart';
-import '../../level_selection/slider_game/levels.dart';
-import '../../player_progress/player_progress.dart';
-import '../../style/confetti.dart';
-import '../../style/my_button.dart';
-import '../../style/palette.dart';
-import 'game_widget.dart';
+import '../../../audio/audio_controller.dart';
+import '../../../audio/sounds.dart';
+import '../game_internals/level_state.dart';
+import '../game_internals/score.dart';
+import '../level_selection/levels.dart';
+import '../../../player_progress/player_progress.dart';
+import '../../../style/confetti.dart';
+import '../../../style/my_button.dart';
+import '../../../style/palette.dart';
+import 'slider_widget.dart';
 
 /// This widget defines the entirety of the screen that the player sees when
 /// they are playing a level.
@@ -26,7 +26,7 @@ import 'game_widget.dart';
 /// It is a stateful widget because it manages some state of its own,
 /// such as whether the game is in a "celebration" state.
 class SliderScreen extends StatefulWidget {
-  final GameLevel level;
+  final SliderLevel level;
 
   const SliderScreen(this.level, {super.key});
 
@@ -62,7 +62,7 @@ class _SliderScreenState extends State<SliderScreen> {
         // Create and provide the [LevelState] object that will be used
         // by widgets below this one in the widget tree.
         ChangeNotifierProvider(
-          create: (context) => LevelState(
+          create: (context) => SliderLevelState(
             goal: widget.level.goal,
             onWin: _playerWon,
           ),
@@ -97,7 +97,7 @@ class _SliderScreenState extends State<SliderScreen> {
                   const Spacer(),
                   Expanded(
                     // The actual UI of the game.
-                    child: GameWidget(),
+                    child: SliderWidget(),
                   ),
                   const Spacer(),
                   Padding(
@@ -132,7 +132,7 @@ class _SliderScreenState extends State<SliderScreen> {
   Future<void> _playerWon() async {
     _log.info('Level ${widget.level.number} won');
 
-    final score = Score(
+    final score = SliderScore(
       widget.level.number,
       widget.level.difficulty,
       DateTime.now().difference(_startOfPlay),

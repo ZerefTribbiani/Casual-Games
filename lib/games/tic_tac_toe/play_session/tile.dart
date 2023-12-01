@@ -1,5 +1,5 @@
-import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
-import 'package:basic/play_session/tic_tac_toe/player.dart';
+import 'package:basic/games/tic_tac_toe/game_internals/board_state.dart';
+import 'package:basic/games/tic_tac_toe/play_session/player.dart';
 import 'package:basic/style/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,12 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
-    final tileOwner = context.watch<BoardState>().tileOwners[x][y];
+    final boardState = context.watch<BoardState>();
+    final tileOwner = boardState.tileOwners[x][y];
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cols = boardState.tileOwners[0].length;
+    final fontSize = screenWidth / cols / 1.5;
 
     Border border;
     BorderSide borderSide = BorderSide(color: palette.inkFullOpacity, width: 3);
@@ -67,7 +72,7 @@ class Tile extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Permanent Marker',
-            fontSize: 55,
+            fontSize: fontSize,
             height: 1,
           ),
         ),

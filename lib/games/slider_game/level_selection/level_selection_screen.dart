@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../audio/audio_controller.dart';
-import '../../audio/sounds.dart';
-import '../../player_progress/player_progress.dart';
-import '../../style/my_button.dart';
-import '../../style/palette.dart';
-import '../../style/responsive_screen.dart';
+import '../../../audio/audio_controller.dart';
+import '../../../audio/sounds.dart';
+import '../../../player_progress/player_progress.dart';
+import '../../../style/my_button.dart';
+import '../../../style/palette.dart';
+import '../../../style/responsive_screen.dart';
 import 'levels.dart';
 
-class LevelSelectionScreen extends StatelessWidget {
-  const LevelSelectionScreen({super.key});
+class SliderLevelSelectionScreen extends StatelessWidget {
+  const SliderLevelSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class LevelSelectionScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  for (final level in gameLevels)
+                  for (final level in sliderLevels)
                     ListTile(
                       enabled: playerProgress.highestLevelReached >=
                           level.number - 1,

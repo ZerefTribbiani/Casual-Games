@@ -1,39 +1,20 @@
 import 'package:basic/audio/audio_controller.dart';
 import 'package:basic/audio/sounds.dart';
-import 'package:basic/game_internals/tic_tac_toe/board_state.dart';
-import 'package:basic/level_selection/tic_tac_toe/tic_tac_toe_levels.dart';
-import 'package:basic/play_session/tic_tac_toe/tile.dart';
+import 'package:basic/games/tic_tac_toe/game_internals/board_state.dart';
+import 'package:basic/games/tic_tac_toe/level_selection/levels.dart';
+import 'package:basic/games/tic_tac_toe/play_session/current_player_display.dart';
+import 'package:basic/games/tic_tac_toe/play_session/tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CurrentPlayerWidget extends StatelessWidget {
-  const CurrentPlayerWidget({super.key});
+class TicTacToeWidget extends StatefulWidget {
+  const TicTacToeWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final boardState = context.watch<BoardState>();
-    final playerSide = boardState.currentPlayer == 1 ? 'X' : 'O';
-
-    return Text(
-      'Current Player: $playerSide',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: 'Permanent Marker',
-        fontSize: 40,
-        height: 1,
-      ),
-    );
-  }
+  State<TicTacToeWidget> createState() => _TicTacToeWidgetState();
 }
 
-class Board extends StatefulWidget {
-  const Board({super.key});
-
-  @override
-  State<Board> createState() => _BoardState();
-}
-
-class _BoardState extends State<Board> {
+class _TicTacToeWidgetState extends State<TicTacToeWidget> {
   @override
   Widget build(BuildContext context) {
     final level = context.watch<TicTacToeLevel>();
@@ -42,7 +23,7 @@ class _BoardState extends State<Board> {
       children: [
         Expanded(
           flex: 1,
-          child: CurrentPlayerWidget(),
+          child: CurrentPlayerDisplay(),
         ),
         Expanded(
           flex: 4,

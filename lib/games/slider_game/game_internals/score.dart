@@ -3,14 +3,14 @@
 // BSD-style license that can be found in the LICENSE file.
 
 /// Encapsulates a score and the arithmetic to compute it.
-class Score {
+class SliderScore {
   final int score;
 
   final Duration duration;
 
   final int level;
 
-  factory Score(int level, String difficulty, Duration duration) {
+  factory SliderScore(int level, String difficulty, Duration duration) {
     // The higher the difficulty, the higher the score.
     int score;
     if (difficulty == 'Easy') {
@@ -20,10 +20,10 @@ class Score {
     }
     // The lower the time to beat the level, the higher the score.
     score *= 10000 ~/ (duration.inSeconds.abs() + 1);
-    return Score._(score, duration, level);
+    return SliderScore._(score, duration, level);
   }
 
-  const Score._(this.score, this.duration, this.level);
+  const SliderScore._(this.score, this.duration, this.level);
 
   String get formattedTime {
     final buf = StringBuffer();
